@@ -5,6 +5,7 @@ const path = require('path')
 // Спробуйте створити якийсь файл txt, прочитайте з нього дані і одразу, дані які ви отримали запишіть їх в інший файл, в вас вийде невеликий callback hell, пізніше я вам покажу
 // як можна це обійти, але поки зробіть так
 
+<<<<<<< HEAD
 fs.mkdir(path.join(__dirname,'task1'),err=>{
     if (err){
         console.log(err)
@@ -79,6 +80,82 @@ fs.mkdir(path.join(__dirname, 'task2'), err => {
         })
     })
 })
+=======
+// fs.mkdir(path.join(__dirname,'task1'),err=>{
+//     if (err){
+//         console.log(err)
+//         throw err
+//     }
+// })
+//
+// fs.writeFile(path.join(__dirname,'task1', 'file.txt'), 'Hello Octen', err => {
+//     if (err) {
+//         console.log(err)
+//         throw err
+//     }
+// })
+//
+// fs.readFile(path.join(__dirname,'task1', 'file.txt'), (err, data) => {
+//     if (err) {
+//         console.log(err)
+//         throw err
+//     }
+//     fs.writeFile(path.join(__dirname,'task1', 'file2.txt'), `${data.toString()}`, err => {
+//         if (err) {
+//             console.log(err)
+//             throw err
+//         }
+//     })
+// })
+//
+// //Task2
+// // Створіть файл ( можете вручну ) заповніть його якимись даними
+// // Прочитайте його, скопіюйте всі дані з нього і перенесіть їх в нову папку та файл в ній,
+// //     старий файл видаліть після того як все завершиться. Також вийде callback hell
+//
+// fs.mkdir(path.join(__dirname, 'task2'), err => {
+//     if (err) {
+//         console.log(err)
+//         throw err
+//     }
+//     fs.writeFile(path.join(__dirname, 'task2', 'file.txt'), 'good evening', err => {
+//         if (err) {
+//             console.log(err)
+//             throw err
+//         }
+//         fs.readFile(path.join(__dirname, 'task2', 'file.txt'), (err, data) => {
+//             if (err) {
+//                 console.log(err)
+//                 throw err
+//             }
+//             fs.mkdir(path.join(__dirname, 'task2', 'example'), err => {
+//                 if (err) {
+//                     console.log(err)
+//                     throw err
+//                 }
+//                 fs.writeFile(path.join(__dirname, 'task2', 'example', 'file3.txt'),'', (err) => {
+//                     if (err) {
+//                         console.log(err)
+//                         throw err
+//                     }
+//                     fs.appendFile(path.join(__dirname, 'task2', 'example', 'file3.txt'), `${data.toString()}`, err => {
+//                         if (err) {
+//                             console.log(err)
+//                             throw err
+//                         }
+//                         fs.unlink(path.join(__dirname, 'task2', 'file.txt'), err => {
+//                             if (err) {
+//                                 console.log(err)
+//                                 throw err
+//                             }
+//                         })
+//                     })
+//                 })
+//             })
+//         })
+//     })
+// })
+>>>>>>> 9a179ce (add classwork)
 
 //Task3
 // Створіть папку (можете вручну) напишіть скріпт який створить в ній якись дані
