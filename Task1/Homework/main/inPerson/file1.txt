@@ -1,0 +1,4 @@
+
+ name:Natalia, age:35, city:Kyiv
+ name:Katya, age:18, city:Lviv
+ name:Olga, age:22, city:Odessa

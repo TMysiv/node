@@ -1,0 +1,4 @@
+
+ name:Petro, age:30, city:Odessa
+ name:Andriy, age:22, city:Lviv
+ name:Vasya, age:25, city:Kyiv
