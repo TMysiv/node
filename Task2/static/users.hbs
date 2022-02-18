@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .users h3{
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    {{#each users}}
+            <div class="users">
+                <h3>{{this.firstName}}</h3>
+                <h3>{{this.lastName}}</h3>
+                <h3>{{this.email}}</h3>
+                <h3>{{this.password}}</h3>
+                <h3>{{this.age}}</h3>
+                <h3>{{this.city}}</h3>
+            </div>
+
+        {{/each}}
+    <hr>
+
+
+
+</body>
+</html>
