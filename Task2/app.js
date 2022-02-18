@@ -27,7 +27,7 @@ app.get('/users', ({query}, res) => {
         if (query.city) {
             array = array.filter(arr => arr.city === query.city);
         }
-        res.render('users', {users: array})
+        res.render('users', {users: array});
         return
     }
     res.render('users', {users})
@@ -46,7 +46,7 @@ app.get('/error', (req, res) => {
     res.render('error')
 });
 
-app.get('/signIn',(req,res)=>{
+app.get('/signIn', (req, res) => {
     res.render('signIn')
 })
 
@@ -60,11 +60,14 @@ app.post('/login', ({body}, res) => {
     }
 });
 
-app.post('/signIn',({body},res)=>{
-    const oneUser = users.find(user => user.email === body.email);
-    const samePassword = users.find(user => user.password === body.password);
-    if (oneUser && samePassword){
-        res.render('oneUser',{oneUser})
+app.post('/signIn', ({body}, res) => {
+    const oneUser = users.find(user => user.email === body.email && user.password === body.password);
+    if (oneUser) {
+        const id = oneUser.id
+        res.redirect(`/users/${id}`)
+    }
+    else{
+        res.redirect('/error')
     }
 })
 
