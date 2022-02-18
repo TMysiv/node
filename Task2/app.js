@@ -29,7 +29,8 @@ app.get('/users', ({query}, res) => {
         }
         res.render('users', {users: array});
         return
-    };
+    }
+    ;
     res.render('users', {users});
 });
 
@@ -39,7 +40,7 @@ app.get('/users/:id', (req, res) => {
     res.render('oneUser', {oneUser});
     if (!oneUser) {
         const error = 'Такого юзера неіснує';
-        res.render('error',{error});
+        res.render('error', {error});
     }
 })
 
@@ -52,7 +53,7 @@ app.post('/login', ({body}, res) => {
     const sameEmail = users.find(user => user.email === body.email);
     if (sameEmail) {
         const error = 'Такий емейл занятий';
-        res.render('error',{error});
+        res.render('error', {error});
     } else {
         users.push({...body, id: users.length ? users[users.length - 1].id + 1 : 1});
         res.redirect('/users');
@@ -64,12 +65,12 @@ app.post('/signIn', ({body}, res) => {
     if (oneUser) {
         const id = oneUser.id;
         res.redirect(`/users/${id}`);
-    }
-    else{
+    } else {
         const error = 'Невірний логін або пароль'
-        res.render('error',{error})
+        res.render('error', {error})
     }
 })
+
 app.get('/error', (req, res) => {
     res.render('error');
 });
