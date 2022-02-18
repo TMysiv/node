@@ -61,10 +61,10 @@ app.post('/login', ({body}, res) => {
 });
 
 app.post('/signIn',({body},res)=>{
-    const sameEmail = users.find(user => user.email === body.email);
+    const oneUser = users.find(user => user.email === body.email);
     const samePassword = users.find(user => user.password === body.password);
-    if (sameEmail && samePassword){
-        res.redirect('oneUser')
+    if (oneUser && samePassword){
+        res.render('oneUser',{oneUser})
     }
 })
 
