@@ -5,7 +5,7 @@ const {engine} = require('express-handlebars');
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, 'static')));
 app.set('view engine', '.hbs');
@@ -29,8 +29,8 @@ app.get('/users', ({query}, res) => {
         }
         res.render('users', {users: array});
         return
-    }
-    res.render('users', {users})
+    };
+    res.render('users', {users});
 });
 
 app.get('/users/:id', (req, res) => {
@@ -38,38 +38,41 @@ app.get('/users/:id', (req, res) => {
     const oneUser = users.find(user => user.id === +id);
     res.render('oneUser', {oneUser});
     if (!oneUser) {
-        res.redirect('notFound')
+        const error = 'Такого юзера неіснує';
+        res.render('error',{error});
     }
 })
 
-app.get('/error', (req, res) => {
-    res.render('error')
-});
 
 app.get('/signIn', (req, res) => {
-    res.render('signIn')
+    res.render('signIn');
 })
 
 app.post('/login', ({body}, res) => {
     const sameEmail = users.find(user => user.email === body.email);
     if (sameEmail) {
-        res.redirect('/error')
+        const error = 'Такий емейл занятий';
+        res.render('error',{error});
     } else {
-        users.push({...body, id: users.length ? users[users.length - 1].id + 1 : 1})
-        res.redirect('/users')
+        users.push({...body, id: users.length ? users[users.length - 1].id + 1 : 1});
+        res.redirect('/users');
     }
 });
 
 app.post('/signIn', ({body}, res) => {
     const oneUser = users.find(user => user.email === body.email && user.password === body.password);
     if (oneUser) {
-        const id = oneUser.id
-        res.redirect(`/users/${id}`)
+        const id = oneUser.id;
+        res.redirect(`/users/${id}`);
     }
     else{
-        res.redirect('/error')
+        const error = 'Невірний логін або пароль'
+        res.render('error',{error})
     }
 })
+app.get('/error', (req, res) => {
+    res.render('error');
+});
 
 app.use((req, res) => {
     res.render('notFound')
