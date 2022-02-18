@@ -5,7 +5,7 @@ const path = require('path')
 // Спробуйте створити якийсь файл txt, прочитайте з нього дані і одразу, дані які ви отримали запишіть їх в інший файл, в вас вийде невеликий callback hell, пізніше я вам покажу
 // як можна це обійти, але поки зробіть так
 
-<<<<<<< HEAD
+
 fs.mkdir(path.join(__dirname,'task1'),err=>{
     if (err){
         console.log(err)
@@ -80,7 +80,7 @@ fs.mkdir(path.join(__dirname, 'task2'), err => {
         })
     })
 })
-=======
+
 // fs.mkdir(path.join(__dirname,'task1'),err=>{
 //     if (err){
 //         console.log(err)
@@ -155,7 +155,7 @@ fs.mkdir(path.join(__dirname, 'task2'), err => {
 //         })
 //     })
 // })
->>>>>>> 9a179ce (add classwork)
+
 
 //Task3
 // Створіть папку (можете вручну) напишіть скріпт який створить в ній якись дані
