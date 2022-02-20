@@ -19,7 +19,6 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/users', ({query}, res) => {
-    if (Object.keys(query).length) {
         let array = [...users];
         if (query.age) {
             array = array.filter(arr => arr.age === query.age);
@@ -27,11 +26,7 @@ app.get('/users', ({query}, res) => {
         if (query.city) {
             array = array.filter(arr => arr.city === query.city);
         }
-        res.render('users', {users: array});
-        return
-    }
-    ;
-    res.render('users', {users});
+    res.render('users', {users: array});
 });
 
 app.get('/users/:id', (req, res) => {
