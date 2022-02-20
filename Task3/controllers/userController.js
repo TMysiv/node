@@ -22,6 +22,7 @@ class UserController {
         if (!oneUser){
             const error = 'Такого юзера не існує';
             res.render('error',{error});
+            return
         }
 
         res.render('oneUser',{oneUser});

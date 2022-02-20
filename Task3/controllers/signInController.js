@@ -12,6 +12,7 @@ class SignInController{
         if (!user) {
             const error = 'не вірний емейл чи пароль';
             res.render('error', {error});
+            return
         }
 
         res.redirect(`users/${user.id}`)
