@@ -23,6 +23,7 @@ app.get('/users', ({query}, res) => {
         if (query.age) {
             array = array.filter(arr => arr.age === query.age);
         }
+
         if (query.city) {
             array = array.filter(arr => arr.city === query.city);
         }
