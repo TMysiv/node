@@ -13,7 +13,7 @@ const checkEmail = (req, res, next) => {
         next();
 
     } catch (e) {
-        res.status(400).send(e.message)
+        res.redirect(`$/error?error=${e.message}`)
     }
 }
 

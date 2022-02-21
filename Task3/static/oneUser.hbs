@@ -16,6 +16,9 @@
         <h3>{{oneUser.password}}</h3>
         <h3>{{oneUser.age}}</h3>
         <h3>{{oneUser.city}}</h3>
+        <form action="/users/{{oneUser.id}}" method="post">
+            <input type="submit" value="delete">
+        </form>
     </div>
 
 

@@ -1,4 +1,4 @@
-const users = require("../db/users");
+let users = require("../db/users");
 
 class UserController {
 
@@ -26,6 +26,12 @@ class UserController {
         }
 
         res.render('oneUser',{oneUser});
+    }
+
+    deleteUserById({ params }, res)  {
+        users = users.filter(user => user.id !== +params.userId);
+
+        res.redirect('/users');
     }
 }
 

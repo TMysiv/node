@@ -1,4 +1,5 @@
 const {Router} = require('express');
+
 const users = require('../db/users');
 const userController = require('../controllers/userController')
 
