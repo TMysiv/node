@@ -8,13 +8,6 @@ class SignInController{
 
     checkUser({body},res){
         const user = users.find(user => user.email === body.email && user.password === body.password);
-
-        if (!user) {
-            const error = 'не вірний емейл чи пароль';
-            res.render('error', {error});
-            return
-        }
-
         res.redirect(`users/${user.id}`)
     }
 }

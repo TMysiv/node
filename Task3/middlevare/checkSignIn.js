@@ -1,8 +1,9 @@
-const users = require('../db/users')
+const users = require("../db/users");
 
-const checkEmail = (req, res, next) => {
+
+const checkEmailAndPassword = (req, res, next) => {
     try {
-        const {email,password} = req.body;
+        const {email, password} = req.body;
 
         const sameEmailOfUser = users.find(user => user.email === email && user.password === password);
 
@@ -17,4 +18,4 @@ const checkEmail = (req, res, next) => {
     }
 }
 
-module.exports = checkEmail;
+module.exports = checkEmailAndPassword;
