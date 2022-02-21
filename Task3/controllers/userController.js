@@ -18,13 +18,6 @@ class UserController {
 
     getUserById({params},res){
         const oneUser = users.find(user => user.id === +params.id);
-
-        if (!oneUser){
-            const error = 'Такого юзера не існує';
-            res.render('error',{error});
-            return
-        }
-
         res.render('oneUser',{oneUser});
     }
 
