@@ -2,18 +2,18 @@ const users = require('../db/users')
 
 const checkEmail = (req, res, next) => {
     try {
-        const {email} = req.body;
+        const {email,password} = req.body;
 
-        const sameEmailOfUser = users.find(user => user.email === email);
+        const sameEmailOfUser = users.find(user => user.email === email && user.password === password);
 
         if (!sameEmailOfUser) {
-            throw new Error('Такого емейлу не існує');
+            throw new Error('Помилковий емейл чи пароль');
         }
 
         next();
 
     } catch (e) {
-        res.redirect(`$/error?error=${e.message}`)
+        res.redirect(`/error?error=${e.message}`)
     }
 }
 

@@ -29,7 +29,8 @@ class UserController {
     }
 
     deleteUserById({ params }, res)  {
-        users = users.filter(user => user.id !== +params.userId);
+
+        users = users.filter(user => user.id !== +params.id);
 
         res.redirect('/users');
     }
