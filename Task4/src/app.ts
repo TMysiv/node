@@ -2,6 +2,7 @@ import express from 'express';
 
 const app = express();
 
-app.listen(5300, () => {
-    console.log('Server has started!!!!!!!!');
+console.log(2);
+app.listen(5000, () => {
+    console.log('Server has started!!!!!!');
 });

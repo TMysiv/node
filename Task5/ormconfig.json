@@ -5,7 +5,7 @@
   "username": "root",
   "password": "rootroot",
   "database": "okten",
-  "synchronize": true,
+  "migrationsRun": true,
   "logging": false,
   "entities": [
     "src/entity/**/*.ts"
