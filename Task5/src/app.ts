@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { createConnection, getManager } from 'typeorm';
 
 import { User } from './entity/user';
+import {Post} from "./entity/posts";
 
 const app = express();
 
@@ -11,8 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/users', async (req:Request, res:Response) => {
     const users = await getManager().getRepository(User)
-        .createQueryBuilder('user')
-        .leftJoin('Posts', 'posts', 'posts.userId = user.id')
+        .createQueryBuilder('users')
+        .leftJoin('Posts', 'posts', 'posts.userId = users.id')
         .getMany();
     res.json(users);
 });
@@ -38,6 +39,11 @@ app.delete('/users/:id', async (req, res) => {
         .getRepository(User)
         .delete({ id: Number(req.params.id) });
     res.json(deletedUser);
+});
+
+app.get('/posts', async (req:Request, res:Response) => {
+    const posts = await getManager().getRepository(Post).find();
+    res.json(posts);
 });
 
 app.listen(5000, async () => {

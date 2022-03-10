@@ -10,16 +10,16 @@ export interface ICommonFields {
 
 export class CommonFields implements ICommonFields {
     @PrimaryGeneratedColumn()
-    id:number;
+        id:number;
 
     @Column({
         nullable: false,
         default: Date.now(),
     })
     @CreateDateColumn({ type: 'timestamp' })
-    createdAt: string;
+        createdAt: string;
 
     @Column()
     @DeleteDateColumn({ type: 'timestamp' })
-    deletedAt?: string;
+        deletedAt?: string;
 }

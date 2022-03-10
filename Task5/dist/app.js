@@ -7,13 +7,14 @@ const express_1 = __importDefault(require("express"));
 require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const user_1 = require("./entity/user");
+const posts_1 = require("./entity/posts");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.get('/users', async (req, res) => {
     const users = await (0, typeorm_1.getManager)().getRepository(user_1.User)
-        .createQueryBuilder('user')
-        .leftJoin('Posts', 'posts', 'posts.userId = user.id')
+        .createQueryBuilder('users')
+        .leftJoin('Posts', 'posts', 'posts.userId = users.id')
         .getMany();
     res.json(users);
 });
@@ -36,6 +37,10 @@ app.delete('/users/:id', async (req, res) => {
         .getRepository(user_1.User)
         .delete({ id: Number(req.params.id) });
     res.json(deletedUser);
+});
+app.get('/posts', async (req, res) => {
+    const posts = await (0, typeorm_1.getManager)().getRepository(posts_1.Post).find();
+    res.json(posts);
 });
 app.listen(5000, async () => {
     console.log('Server has started!!!!!!');
