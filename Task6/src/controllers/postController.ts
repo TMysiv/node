@@ -1,35 +1,29 @@
 import { Request, Response } from 'express';
-import { getManager } from 'typeorm';
-import { IPost, Post } from '../entity/posts';
+
+import { IPost } from '../entity/posts';
+import { postService } from '../services/postService';
 
 class PostController {
     public async getAllPosts(req: Request, res: Response): Promise<Response<IPost[]>> {
-        const posts = await getManager().getRepository(Post).find();
+        const posts = await postService.getAllPosts();
         return res.json(posts);
     }
 
     public async createPost(req: Request, res: Response): Promise<Response<IPost>> {
-        const newPost = await getManager().getRepository(Post).save(req.body);
+        const newPost = await postService.createPost(req.body);
         return res.status(201).json(newPost);
     }
 
-    public async getPostById(req: Request, res: Response): Promise<Response<IPost>> {
+    public async getPostByUserId(req: Request, res: Response): Promise<Response<IPost[]>> {
         const { userId } = req.params;
-        const user = await getManager().getRepository(Post)
-            .createQueryBuilder('post')
-            .where('post.userId = :id', { id: +userId })
-            .leftJoin('User', 'user', 'user.id = post.userId')
-            .getMany();
-        return res.json(user);
+        const posts = await postService.getPostsByUserId(userId);
+        return res.json(posts);
     }
 
     public async updatePost(req:Request, res: Response):Promise<Response<IPost>> {
         const { id } = req.params;
         const { title, text } = req.body;
-        const updatedPost = await getManager().getRepository(Post)
-            .update({ id: +id }, {
-                title, text,
-            });
+        const updatedPost = await postService.updatePost(id, title, text);
         return res.status(201).json(updatedPost);
     }
 }
