@@ -1,31 +1,24 @@
-import { getManager } from 'typeorm';
-import { IPost, Post } from '../entity/posts';
+import { IPost } from '../entity/posts';
+import { postsRepository } from '../repository/posts/postsRepository';
 
 class PostService {
     public async getAllPosts():Promise<IPost[]> {
-        const posts = await getManager().getRepository(Post).find();
+        const posts = await postsRepository.getAllPosts();
         return posts;
     }
 
     public async createPost(post:IPost):Promise<IPost> {
-        const newPost = await getManager().getRepository(Post).save(post);
+        const newPost = await postsRepository.createPost(post);
         return newPost;
     }
 
     public async getPostsByUserId(userId:string):Promise<IPost[]> {
-        const posts = getManager().getRepository(Post)
-            .createQueryBuilder('post')
-            .where('post.userId = :id', { id: +userId })
-            .leftJoin('User', 'user', 'user.id = post.userId')
-            .getMany();
+        const posts = await postsRepository.getPostsByUserId(userId);
         return posts;
     }
 
     public async updatePost(id:string, title:string, text:string):Promise<IPost | any> {
-        const post = await getManager().getRepository(Post)
-            .update({ id: +id }, {
-                title, text,
-            });
+        const post = await postsRepository.updatePost(id, title, text);
         return post;
     }
 }

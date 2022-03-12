@@ -1,46 +1,24 @@
-import { getManager } from 'typeorm';
-import { IComment, Comment } from '../entity/comments';
+import { IComment } from '../entity/comments';
+import { commentsRepository } from '../repository/comments/commentsRepository';
 
 class CommentService {
     public async getAllComment():Promise<IComment[]> {
-        const comments = await getManager().getRepository(Comment).find();
+        const comments = await commentsRepository.getAllComment();
         return comments;
     }
 
     public async createComment(comment:IComment):Promise<IComment> {
-        const newComment = await getManager().getRepository(Comment).save(comment);
+        const newComment = await commentsRepository.createComment(comment);
         return newComment;
     }
 
     public async getCommentByUserId(userId:string):Promise<IComment[]> {
-        const comments = await getManager().getRepository(Comment)
-            .createQueryBuilder('comment')
-            .where('comment.authorId = :id', { id: +userId })
-            .leftJoinAndSelect('comment.user', 'user')
-            .leftJoinAndSelect('comment.post', 'post')
-            .getMany();
+        const comments = await commentsRepository.getCommentByUserId(userId);
         return comments;
     }
 
     public async updateCommentByAction(commentId:string, action:string):Promise<IComment> {
-        const comment = await getManager().getRepository(Comment)
-            .createQueryBuilder('comment')
-            .where('comment.id = :id', { id: +commentId })
-            .getOne();
-
-        if (!comment) {
-            throw new Error('no action by this comment');
-        }
-
-        if (action === 'like') {
-            await getManager().getRepository(Comment)
-                .update({ id: +commentId }, { like: comment.like + 1 });
-        }
-
-        if (action === 'dislike') {
-            await getManager().getRepository(Comment)
-                .update({ id: +commentId }, { like: comment.dislike + 1 });
-        }
+        const comment = await commentsRepository.updateCommentByAction(commentId, action);
         return comment;
     }
 }

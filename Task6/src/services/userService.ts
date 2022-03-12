@@ -1,35 +1,24 @@
-import { getManager } from 'typeorm';
-
-import { IUser, User } from '../entity/user';
+import { IUser } from '../entity/user';
+import { usersRepository } from '../repository/users/usersRepository';
 
 class UserService {
     public async getAllUsers():Promise<IUser[]> {
-        const users = await getManager().getRepository(User)
-            .createQueryBuilder('user')
-            .leftJoin('Posts', 'posts', 'posts.userId = user.id')
-            .getMany();
+        const users = await usersRepository.getAllUsers();
         return users;
     }
 
     public async createUser(user:IUser):Promise<IUser> {
-        const createdUser = await getManager().getRepository(User).save(user);
+        const createdUser = await usersRepository.createUser(user);
         return createdUser;
     }
 
     public async updateUser(email:string, password:string, id:number):Promise<IUser | any> {
-        const updatedUser = await getManager()
-            .getRepository(User)
-            .update({ id: +id }, {
-                password,
-                email,
-            });
+        const updatedUser = await usersRepository.updateUser(email, password, id);
         return updatedUser;
     }
 
     public async deleteUser(id:string): Promise<void> {
-        await getManager()
-            .getRepository(User)
-            .softDelete({ id: +id });
+        await usersRepository.deleteUser(id);
     }
 }
 
