@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 import { IUser } from '../entity/user';
 import { usersRepository } from '../repository/users/usersRepository';
 
@@ -8,7 +10,10 @@ class UserService {
     }
 
     public async createUser(user:IUser):Promise<IUser> {
-        const createdUser = await usersRepository.createUser(user);
+        const { password } = user;
+        const hashedPassword = await this._hashedPassword(password);
+        const userHashed = { ...user, password: hashedPassword };
+        const createdUser = await usersRepository.createUser(userHashed);
         return createdUser;
     }
 
@@ -19,6 +24,10 @@ class UserService {
 
     public async deleteUser(id:string): Promise<void> {
         await usersRepository.deleteUser(id);
+    }
+
+    private async _hashedPassword(password:string):Promise<string> {
+        return bcrypt.hash(password, 10);
     }
 }
 
