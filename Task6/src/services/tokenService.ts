@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config/config';
-import { ITokens } from "../entity/tokens";
+import { ITokens } from '../entity/tokens';
+import { tokenRepository } from '../repository/token/tokenRepository';
 
 class TokenService {
     public async generateTokenPair(payload:any):
@@ -11,8 +12,16 @@ class TokenService {
         return { accessToken, refreshToken };
     }
 
-    public async saveToken(userId:number, refreshToken:string):Promise<ITokens>{
-        
+    public async saveToken(userId:number, refreshToken:string): Promise<ITokens> {
+        const tokenFromDB = await tokenRepository.findTokeByUserId(userId);
+
+        if (tokenFromDB) {
+            tokenFromDB.refreshToken = refreshToken;
+            return tokenRepository.createToken(tokenFromDB);
+        }
+
+        const token = await tokenRepository.createToken({ refreshToken, userId });
+        return token;
     }
 }
 

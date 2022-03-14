@@ -5,6 +5,7 @@ import { IPost, Post } from './posts';
 import { Comment, IComment } from './comments';
 
 export interface IUser {
+    id:number,
     firstName: string;
     lastName: string;
     age?: number;

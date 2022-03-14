@@ -3,8 +3,8 @@ import { IUser } from '../entity/user';
 import { tokenService } from './tokenService';
 
 class AuthService {
-    public async createUser(user: IUser): Promise<IUser> {
-        const { email } = user;
+    public async registration(body: IUser) {
+        const { email } = body;
 
         const users = await userService.getAllUsers();
         const userWithSameEmail = users.find((us:IUser) => us.email === email);
@@ -12,14 +12,21 @@ class AuthService {
         if (userWithSameEmail) {
             throw new Error('user with this email has exists');
         }
-        const createdUser = await userService.createUser(user);
-        return createdUser;
+        const createdUser = await userService.createUser(body);
+        return this._getTokenData(createdUser);
     }
 
     private async _getTokenData(userData:IUser) {
         const { id, email } = userData;
 
         const tokensPair = await tokenService.generateTokenPair({ userID: id, userEmail: email });
+        await tokenService.saveToken(id, tokensPair.refreshToken);
+
+        return {
+            ...tokensPair,
+            userId: id,
+            userEmail: email,
+        };
     }
 }
 
