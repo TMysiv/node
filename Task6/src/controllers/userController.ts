@@ -9,11 +9,6 @@ class UserController {
         return res.json(users);
     }
 
-    public async createUser(req: Request, res: Response): Promise<Response<IUser>> {
-        const createdUser = await userService.createUser(req.body);
-        return res.status(201).json(createdUser);
-    }
-
     public async updateUserById(req: Request, res: Response): Promise<Response<IUser>> {
         const { email, password } = req.body;
         const { id } = req.params;

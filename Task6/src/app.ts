@@ -22,8 +22,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(apiRouter);
 
-app.listen(5000, async () => {
-    console.log('Server has started!!!!!!');
+const { PORT } = process.env;
+
+app.listen(PORT, async () => {
+    console.log(`Server has started!!!!!! on PORT:${PORT}`);
     try {
         const connection = await createConnection();
         if (connection) {
