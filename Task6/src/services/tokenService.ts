@@ -4,7 +4,7 @@ import { ITokens } from '../entity/tokens';
 import { tokenRepository } from '../repository/token/tokenRepository';
 
 class TokenService {
-    public async generateTokenPair(payload:any):
+    public async generateTokenPair(payload:{userID:number, userEmail:string}):
         Promise<{ accessToken:string, refreshToken:string}> {
         const accessToken = jwt.sign(payload, config.SECRET_ACCESS_KEY as string, { expiresIn: '15m' });
         const refreshToken = jwt.sign(payload, config.SECRET_REFRESH_KEY as string, { expiresIn: '1d' });
