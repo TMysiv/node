@@ -1,3 +1,4 @@
+import { UpdateResult } from 'typeorm';
 import { IPost } from '../entity/posts';
 import { postsRepository } from '../repository/posts/postsRepository';
 
@@ -17,7 +18,7 @@ class PostService {
         return posts;
     }
 
-    public async updatePost(id:string, title:string, text:string):Promise<IPost | any> {
+    public async updatePost(id:string, title:string, text:string):Promise<UpdateResult> {
         const post = await postsRepository.updatePost(id, title, text);
         return post;
     }

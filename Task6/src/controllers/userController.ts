@@ -16,10 +16,10 @@ class UserController {
         return res.json(updatedUser);
     }
 
-    public async deleteUserById(req: Request, res: Response): Promise<void> {
+    public async deleteUserById(req: Request, res: Response): Promise<Response<void>> {
         const { id } = req.params;
         const deletedUser = await userService.deleteUser(id);
-        res.json(deletedUser);
+        return res.json(deletedUser);
     }
 }
 

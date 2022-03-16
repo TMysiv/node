@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 
+import { UpdateResult } from 'typeorm';
 import { IUser } from '../entity/user';
 import { usersRepository } from '../repository/users/usersRepository';
 
@@ -17,7 +18,7 @@ class UserService {
         return createdUser;
     }
 
-    public async updateUser(email:string, password:string, id:number):Promise<IUser | any> {
+    public async updateUser(email:string, password:string, id:number):Promise<UpdateResult> {
         const updatedUser = await usersRepository.updateUser(email, password, id);
         return updatedUser;
     }

@@ -1,4 +1,6 @@
-import { EntityRepository, getManager, Repository } from 'typeorm';
+import {
+    EntityRepository, getManager, Repository, UpdateResult,
+} from 'typeorm';
 
 import { IUser, User } from '../../entity/user';
 import { UsersRepositoryInterface } from './usersRepository.interface';
@@ -16,7 +18,7 @@ class UsersRepository extends Repository<User> implements UsersRepositoryInterfa
         return getManager().getRepository(User).save(user);
     }
 
-    public async updateUser(email:string, password:string, id:number):Promise<IUser | any> {
+    public async updateUser(email:string, password:string, id:number):Promise<UpdateResult> {
         return getManager()
             .getRepository(User)
             .update({ id: +id }, {

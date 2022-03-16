@@ -1,4 +1,6 @@
-import { EntityRepository, getManager, Repository } from 'typeorm';
+import {
+    EntityRepository, getManager, Repository, UpdateResult,
+} from 'typeorm';
 
 import { IPost, Post } from '../../entity/posts';
 import { PostsRepositoryInterface } from './postsRepository.interface';
@@ -21,7 +23,7 @@ class PostsRepository extends Repository<Post> implements PostsRepositoryInterfa
             .getMany();
     }
 
-    public async updatePost(id:string, title:string, text:string):Promise<IPost | any> {
+    public async updatePost(id:string, title:string, text:string):Promise<UpdateResult> {
         return getManager().getRepository(Post)
             .update({ id: +id }, {
                 title, text,
