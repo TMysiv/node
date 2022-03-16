@@ -8,7 +8,7 @@ class AuthService {
         const { email } = body;
 
         const users = await userService.getAllUsers();
-        const userWithSameEmail = users.find((us:IUser) => us.email === email);
+        const userWithSameEmail = users.find((user:IUser) => user.email === email);
 
         if (userWithSameEmail) {
             throw new Error('user with this email has exists');
