@@ -3,23 +3,19 @@ import { commentsRepository } from '../repository/comments/commentsRepository';
 
 class CommentService {
     public async getAllComment():Promise<IComment[]> {
-        const comments = await commentsRepository.getAllComment();
-        return comments;
+        return commentsRepository.getAllComment();
     }
 
     public async createComment(comment:IComment):Promise<IComment> {
-        const newComment = await commentsRepository.createComment(comment);
-        return newComment;
+        return commentsRepository.createComment(comment);
     }
 
     public async getCommentByUserId(userId:string):Promise<IComment[]> {
-        const comments = await commentsRepository.getCommentByUserId(userId);
-        return comments;
+        return commentsRepository.getCommentByUserId(userId);
     }
 
     public async updateCommentByAction(commentId:string, action:string):Promise<IComment> {
-        const comment = await commentsRepository.updateCommentByAction(commentId, action);
-        return comment;
+        return commentsRepository.updateCommentByAction(commentId, action);
     }
 }
 

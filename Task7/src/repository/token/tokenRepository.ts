@@ -11,6 +11,10 @@ class TokenRepository extends Repository<Tokens> implements ITokenRepositoryInte
     public async findTokeByUserId(userId:number):Promise<ITokens | undefined> {
         return getManager().getRepository(Tokens).findOne({ userId });
     }
+
+    public async deleteByParams(findObject:Partial<ITokens>) {
+        return getManager().getRepository(Tokens).delete(findObject);
+    }
 }
 
 export const tokenRepository = new TokenRepository();

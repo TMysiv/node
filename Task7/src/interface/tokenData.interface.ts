@@ -4,3 +4,8 @@ export interface ITokenData{
     userId:number,
     userEmail:string,
 }
+
+export interface IUserPayload{
+    userId:number,
+    userEmail:string,
+}

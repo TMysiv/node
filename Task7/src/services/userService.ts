@@ -25,8 +25,7 @@ class UserService {
     }
 
     public async updateUser(email:string, password:string, id:number):Promise<UpdateResult> {
-        const updatedUser = await usersRepository.updateUser(email, password, id);
-        return updatedUser;
+        return usersRepository.updateUser(email, password, id);
     }
 
     public async deleteUser(id:string): Promise<void> {
