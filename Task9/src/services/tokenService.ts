@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 
 import { config } from '../config/config';
-import { ITokens } from '../entity/tokens';
+import { ITokens } from '../entity';
 import { tokenRepository } from '../repository/token/tokenRepository';
-import { IUserPayload } from '../interface/tokenData.interface';
+import { IUserPayload } from '../interface';
 
 class TokenService {
     public generateTokenPair(payload:{userId:number, userEmail:string}):

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { IPost } from '../entity/posts';
-import { postService } from '../services/postService';
+import { IPost } from '../entity';
+import { postService } from '../services';
 
 class PostController {
     public async getAllPosts(req: Request, res: Response): Promise<Response<IPost[]>> {

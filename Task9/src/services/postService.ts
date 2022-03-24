@@ -1,6 +1,6 @@
 import { UpdateResult } from 'typeorm';
 
-import { IPost } from '../entity/posts';
+import { IPost } from '../entity';
 import { postsRepository } from '../repository/posts/postsRepository';
 
 class PostService {

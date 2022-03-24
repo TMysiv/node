@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
-
 import { UpdateResult } from 'typeorm';
-import { IUser } from '../entity/user';
+
+import { IUser } from '../entity';
 import { usersRepository } from '../repository/users/usersRepository';
 
 class UserService {

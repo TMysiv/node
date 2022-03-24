@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 
-import { IRequestExtend } from '../interface/requsetExtend.interface';
-import { tokenService, userService } from '../services/index';
+import { IRequestExtend } from '../interface';
+import { tokenService, userService } from '../services';
 import { tokenRepository } from '../repository/token/tokenRepository';
 
 class AuthMiddleware {

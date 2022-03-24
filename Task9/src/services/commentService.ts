@@ -1,4 +1,4 @@
-import { IComment } from '../entity/comments';
+import { IComment } from '../entity';
 import { commentsRepository } from '../repository/comments/commentsRepository';
 
 class CommentService {

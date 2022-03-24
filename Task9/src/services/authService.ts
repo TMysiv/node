@@ -1,5 +1,5 @@
 import { userService } from './userService';
-import { IUser } from '../entity/user';
+import { IUser } from '../entity';
 
 class AuthService {
     public async registration(body: IUser):Promise<IUser> {

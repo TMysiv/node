@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 
-import { authService, tokenService, userService } from '../services/index';
-import { ITokenData } from '../interface/tokenData.interface';
-import { IRequestExtend } from '../interface/requsetExtend.interface';
-import { IUser } from '../entity/user';
+import { authService, tokenService, userService } from '../services';
+import { ITokenData, IRequestExtend } from '../interface';
+import { IUser } from '../entity';
 import { tokenRepository } from '../repository/token/tokenRepository';
 
 class AuthController {
