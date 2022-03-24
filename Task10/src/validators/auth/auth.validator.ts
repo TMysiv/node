@@ -9,7 +9,7 @@ export const authValidator = {
         age: Joi.number().min(18),
         phone: Joi.string().regex(regex.Phone).required(),
         email: Joi.string().regex(regex.Email).required(),
-        password: Joi.string().min(8),
+        password: Joi.string().min(8).required(),
     }),
 
     login: Joi.object({
