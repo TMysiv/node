@@ -5,6 +5,7 @@ import {
 import { CommonFields } from './commonFields';
 import { User } from './user';
 import { Comment, IComment } from './comments';
+import { config } from '../config/config';
 
 export interface IPost {
     title: string;
@@ -13,7 +14,7 @@ export interface IPost {
     comments: IComment[];
 }
 
-@Entity('Posts', { database: 'okten' })
+@Entity('Posts', { database: config.database })
 export class Post extends CommonFields implements IPost {
     @Column({
         type: 'varchar',
