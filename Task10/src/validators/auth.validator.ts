@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-import { regex } from '../../constans/regex';
+import { regex } from '../constans/regex';
 
 export const authValidator = {
     registration: Joi.object({
@@ -14,6 +14,6 @@ export const authValidator = {
 
     login: Joi.object({
         email: Joi.string().regex(regex.Email).required(),
-        password: Joi.string().min(8),
+        password: Joi.string().min(8).required(),
     }),
 };
