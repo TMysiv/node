@@ -30,7 +30,7 @@ class UserMiddleware {
             const { error, value } = authValidator.registration.validate(req.body);
 
             if (error) {
-                next(new ErrorHandler('Some fields are not valid', 401));
+                next(new ErrorHandler(error.details[0].message, 401));
                 return;
             }
 
@@ -46,7 +46,7 @@ class UserMiddleware {
             const { error, value } = authValidator.login.validate(req.body);
 
             if (error) {
-                next(new ErrorHandler('login or password not valid', 401));
+                next(new ErrorHandler(error.details[0].message, 401));
                 return;
             }
 
@@ -62,7 +62,7 @@ class UserMiddleware {
             const { error, value } = paramsValidator.id.validate(req.params);
 
             if (error) {
-                next(new ErrorHandler('User not found', 401));
+                next(new ErrorHandler(error.details[0].message, 401));
                 return;
             }
 
@@ -78,7 +78,7 @@ class UserMiddleware {
             const { error, value } = authValidator.update.validate(req.body);
 
             if (error) {
-                next(new ErrorHandler('login or password not valid', 401));
+                next(new ErrorHandler(error.details[0].message, 401));
                 return;
             }
 
