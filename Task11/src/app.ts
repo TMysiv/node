@@ -12,6 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(apiRouter);
 
+// @ts-ignore
+global.rootDir = __dirname;
+
 app.listen(config.PORT, async () => {
     console.log(`Server has started!!!!!! on PORT:${config.PORT}`);
     try {

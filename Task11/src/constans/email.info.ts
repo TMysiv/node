@@ -2,22 +2,22 @@ import { emailActionEnum } from './enums';
 
 export const emailInfo = {
     [emailActionEnum.WELCOME]: {
-        subject: 'Welcome to Okten',
-        html: 'Hello you successfully registration',
+        subject: 'Welcome to Netflix',
+        templateName: 'welcome',
     },
 
     [emailActionEnum.LOGIN]: {
         subject: 'Login',
-        html: 'Hello you successfully login',
+        templateName: 'login',
     },
 
     [emailActionEnum.LOGOUT]: {
         subject: 'Logout',
-        html: 'Hello you successfully logout',
+        templateName: 'out',
     },
 
     [emailActionEnum.BLOCKED]: {
         subject: 'Blocked',
-        html: 'Sorry your account was blocked',
+        templateName: 'blocked',
     },
 };

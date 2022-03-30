@@ -9,4 +9,5 @@ export const config = {
     database: process.env.database,
     NO_REPLY_EMAIL: process.env.NO_REPLY_EMAIL,
     NO_REPLY_EMAIL_PASSWORD: process.env.NO_REPLY_EMAIL_PASSWORD,
+    START_SITE: process.env.START_SITE,
 };

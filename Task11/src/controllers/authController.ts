@@ -10,30 +10,32 @@ import { emailActionEnum } from '../constans';
 
 class AuthController {
     public async registration(req: Request, res: Response):Promise<Response<ITokenData>> {
-        const { email } = req.body;
+        const { email, firstName } = req.body;
 
         const data = await authService.registration(req.body);
-        await emailService.sendEmail(email, emailActionEnum.WELCOME);
+        await emailService.sendEmail(email, emailActionEnum.WELCOME, { userName: firstName });
 
         return res.json(data);
     }
 
     async logout(req:IRequestExtend, res:Response):Promise<Response<string>> {
-        const { id, email } = req.user as IUser;
+        const { id, email, firstName } = req.user as IUser;
 
         await tokenService.deleteUserTokenPair(id);
 
-        await emailService.sendEmail(email, emailActionEnum.LOGOUT);
+        await emailService.sendEmail(email, emailActionEnum.LOGOUT, { userName: firstName });
         return res.json('Logout successfully');
     }
 
     async login(req:IRequestExtend, res:Response, next:NextFunction) {
         try {
-            const { id, email, password: hashedPassword } = req.user as IUser;
+            const {
+                id, email, password: hashedPassword, firstName,
+            } = req.user as IUser;
 
             const { password } = req.body;
 
-            await emailService.sendEmail(email, emailActionEnum.LOGIN);
+            await emailService.sendEmail(email, emailActionEnum.LOGIN, { userName: firstName });
 
             await userService.compareUserPassword(password, hashedPassword);
 
