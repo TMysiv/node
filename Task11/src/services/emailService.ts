@@ -3,7 +3,7 @@ import EmailTemplates from 'email-templates';
 import path from 'path';
 
 import { config } from '../config/config';
-import { emailActionEnum, emailInfo } from '../constans';
+import { emailActionEnum, emailInfo } from '../constants';
 
 class EmailService {
     emailTransporter = nodemailer.createTransport({
@@ -16,7 +16,6 @@ class EmailService {
 
     async sendEmail(userEmail:string, action:emailActionEnum, context = {})
         :Promise<SentMessageInfo> {
-
         const { subject, templateName } = emailInfo[action];
 
         const templateRenderer = new EmailTemplates({

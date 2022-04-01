@@ -1,6 +1,7 @@
 import { EntityRepository, getManager, Repository } from 'typeorm';
 import { ITokens, Tokens } from '../../entity/tokens';
 import { ITokenRepositoryInterface } from './tokenRepository.interface';
+import { ActiveTokens, IActiveTokens } from '../../entity';
 
 @EntityRepository(Tokens)
 class TokenRepository extends Repository<Tokens> implements ITokenRepositoryInterface {
@@ -16,8 +17,21 @@ class TokenRepository extends Repository<Tokens> implements ITokenRepositoryInte
         return getManager().getRepository(Tokens).findOne(searchObject);
     }
 
+    public async findActiveTokenByParams(searchObject:Partial<IActiveTokens>):
+        Promise<IActiveTokens | undefined> {
+        return getManager().getRepository(ActiveTokens).findOne(searchObject);
+    }
+
     public async deleteByParams(findObject:Partial<ITokens>) {
         return getManager().getRepository(Tokens).delete(findObject);
+    }
+
+    public async deleteBActiveToken(findObject:Partial<IActiveTokens>) {
+        return getManager().getRepository(ActiveTokens).delete(findObject);
+    }
+
+    public async createActiveToken(token:any):Promise<string> {
+        return getManager().getRepository(ActiveTokens).save(token);
     }
 }
 

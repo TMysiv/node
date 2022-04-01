@@ -6,7 +6,8 @@ import {
 import { IRequestExtend, ITokenData } from '../interface';
 import { IUser } from '../entity';
 import { tokenRepository } from '../repository/token/tokenRepository';
-import { emailActionEnum } from '../constans';
+import { constants, emailActionEnum } from '../constants';
+import { usersRepository } from '../repository/users/usersRepository';
 
 class AuthController {
     public async registration(req: Request, res: Response):Promise<Response<ITokenData>> {
@@ -35,14 +36,15 @@ class AuthController {
 
             const { password } = req.body;
 
-            await emailService.sendEmail(email, emailActionEnum.LOGIN, { userName: firstName });
-
             await userService.compareUserPassword(password, hashedPassword);
 
             const tokenPair = tokenService.generateTokenPair({ userId: id, userEmail: email });
             const { refreshToken, accessToken } = tokenPair;
 
             await tokenRepository.createToken({ refreshToken, accessToken, userId: id });
+
+            await emailService.sendEmail(email, emailActionEnum.LOGIN, { userName: firstName });
+
             res.json({
                 accessToken,
                 refreshToken,
@@ -69,6 +71,44 @@ class AuthController {
                 refreshToken,
                 user: req.user,
             });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async sendForgotPassword(req:IRequestExtend, res:Response, next:NextFunction) {
+        try {
+            const { email, id, firstName } = req.user as IUser;
+
+            const activeToken = tokenService.generateActiveToken({ userId: id, userEmail: email });
+
+            await tokenRepository.createActiveToken({ activeToken, userId: id });
+
+            await emailService.sendEmail(
+                email,
+                emailActionEnum.FORGOTPASSWORD,
+                { firstName, frontendUrl: constants.FrontendUrl, activeToken },
+            );
+            res.sendStatus(202);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async setPassword(req:IRequestExtend, res:Response, next:NextFunction) {
+        try {
+            const activeToken = req.get('Authorization');
+
+            await tokenRepository.deleteBActiveToken({ activeToken });
+
+            const { id } = req.user as IUser;
+            const { password } = req.body;
+
+            const hashedPassword = await userService.hashedPassword(password);
+
+            await usersRepository.updatePassword(hashedPassword, id);
+
+            res.sendStatus(201);
         } catch (e) {
             next(e);
         }

@@ -20,4 +20,9 @@ export const emailInfo = {
         subject: 'Blocked',
         templateName: 'blocked',
     },
+
+    [emailActionEnum.FORGOTPASSWORD]: {
+        subject: 'Password',
+        templateName: 'forgotPassword',
+    },
 };

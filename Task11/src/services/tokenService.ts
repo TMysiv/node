@@ -41,7 +41,15 @@ class TokenService {
             secretWord = config.SECRET_REFRESH_KEY;
         }
 
+        if (tokenType === 'active') {
+            secretWord = config.ACTIVE_KEY;
+        }
+
         return jwt.verify(authToken, secretWord as string) as IUserPayload;
+    }
+
+    public generateActiveToken(payload:{userId:number, userEmail:string}):string {
+        return jwt.sign(payload, config.ACTIVE_KEY as string, { expiresIn: '10h' });
     }
 }
 

@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-import { regex } from '../constans/regex';
+import { regex } from '../constants/regex';
 
 export const authValidator = {
     registration: Joi.object({
@@ -20,5 +20,13 @@ export const authValidator = {
     update: Joi.object({
         email: Joi.string().regex(regex.Email).required(),
         password: Joi.string().min(8).required(),
+    }),
+
+    validEmail: Joi.object({
+        email: Joi.string().regex(regex.Email).message('Email not valid').trim(),
+    }),
+
+    validPass: Joi.object({
+        password: Joi.string().min(8).message('Password not valid').trim(),
     }),
 };

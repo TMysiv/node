@@ -11,7 +11,7 @@ class UserService {
 
     public async createUser(user:IUser):Promise<IUser> {
         const { password } = user;
-        const hashedPassword = await this._hashedPassword(password);
+        const hashedPassword = await this.hashedPassword(password);
         const userHashed = { ...user, password: hashedPassword };
         return usersRepository.createUser(userHashed);
     }
@@ -32,7 +32,7 @@ class UserService {
         await usersRepository.deleteUser(id);
     }
 
-    private async _hashedPassword(password:string):Promise<string> {
+    public async hashedPassword(password:string):Promise<string> {
         return bcrypt.hash(password, 10);
     }
 }

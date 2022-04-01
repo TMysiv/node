@@ -88,6 +88,38 @@ class UserMiddleware {
             next(e);
         }
     }
+
+    async validEmail(req: IRequestExtend, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { error, value } = authValidator.validEmail.validate(req.body);
+
+            if (error) {
+                next(new ErrorHandler(error.details[0].message, 401));
+                return;
+            }
+
+            req.body = value;
+            next();
+        } catch (e: any) {
+            next(e);
+        }
+    }
+
+    async validPassword(req: IRequestExtend, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { error, value } = authValidator.validPass.validate(req.body);
+
+            if (error) {
+                next(new ErrorHandler(error.details[0].message, 401));
+                return;
+            }
+
+            req.body = value;
+            next();
+        } catch (e: any) {
+            next(e);
+        }
+    }
 }
 
 export const userMiddleware = new UserMiddleware();

@@ -32,6 +32,14 @@ class UsersRepository extends Repository<User> implements UsersRepositoryInterfa
             .getRepository(User)
             .softDelete({ id: +id });
     }
+
+    public async updatePassword(password:string, id:number):Promise<UpdateResult> {
+        return getManager()
+            .getRepository(User)
+            .update({ id: +id }, {
+                password,
+            });
+    }
 }
 
 export const usersRepository = new UsersRepository();
