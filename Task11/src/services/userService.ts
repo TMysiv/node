@@ -40,11 +40,11 @@ class UserService {
 
     public async sendAllDayMail() {
         const users = await usersRepository.getAllUsers();
-        // eslint-disable-next-line no-restricted-syntax
-        for (const user of users) {
-            const { email } = user;
-            emailService.sendEmail(email, emailActionEnum.ALLDAYMAIL);
-        }
+
+        await Promise.allSettled(users.map(async (user) => emailService.sendEmail(
+            user.email,
+            emailActionEnum.ALLDAYMAIL,
+        )));
     }
 }
 
