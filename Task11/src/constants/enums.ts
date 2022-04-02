@@ -3,5 +3,6 @@ export enum emailActionEnum {
     LOGIN,
     LOGOUT,
     BLOCKED,
-    FORGOTPASSWORD
+    FORGOTPASSWORD,
+    ALLDAYMAIL
 }

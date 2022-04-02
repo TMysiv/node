@@ -25,4 +25,9 @@ export const emailInfo = {
         subject: 'Password',
         templateName: 'forgotPassword',
     },
+
+    [emailActionEnum.ALLDAYMAIL]: {
+        subject: 'Update Films',
+        templateName: 'allDayMail',
+    },
 };

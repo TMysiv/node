@@ -3,6 +3,8 @@ import { UpdateResult } from 'typeorm';
 
 import { IUser } from '../entity';
 import { usersRepository } from '../repository/users/usersRepository';
+import { emailService } from './emailService';
+import { emailActionEnum } from '../constants';
 
 class UserService {
     public async getAllUsers():Promise<IUser[]> {
@@ -34,6 +36,15 @@ class UserService {
 
     public async hashedPassword(password:string):Promise<string> {
         return bcrypt.hash(password, 10);
+    }
+
+    public async sendAllDayMail() {
+        const users = await usersRepository.getAllUsers();
+        // eslint-disable-next-line no-restricted-syntax
+        for (const user of users) {
+            const { email } = user;
+            emailService.sendEmail(email, emailActionEnum.ALLDAYMAIL);
+        }
     }
 }
 
