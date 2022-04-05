@@ -5,6 +5,7 @@ import { IUser } from '../entity';
 import { usersRepository } from '../repository/users/usersRepository';
 import { emailService } from './emailService';
 import { emailActionEnum } from '../constants';
+import { IPaginationResponse } from '../interface';
 
 class UserService {
     public async getAllUsers():Promise<IUser[]> {
@@ -45,6 +46,15 @@ class UserService {
             user.email,
             emailActionEnum.ALLDAYMAIL,
         )));
+    }
+
+    public async getUserPagination(
+        filterObject:any,
+        page:number,
+        perPage:number,
+    )
+        :Promise<IPaginationResponse<IUser>> {
+        return usersRepository.getUserPagination(filterObject, perPage, page);
     }
 }
 

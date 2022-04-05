@@ -6,6 +6,7 @@ import utc from 'dayjs/plugin/utc';
 
 import { IUser, User } from '../../entity';
 import { UsersRepositoryInterface } from './usersRepository.interface';
+import { IPaginationResponse } from '../../interface';
 
 dayjs.extend(utc);
 
@@ -50,6 +51,26 @@ class UsersRepository extends Repository<User> implements UsersRepositoryInterfa
             .createQueryBuilder('user')
             .where('user.createdAt >= :date', { date: dayjs().utc().startOf('day').format() })
             .getMany();
+    }
+
+    public async getUserPagination(
+        searchObject:Partial<IUser>,
+        limit:number,
+        page:number,
+    )
+        :Promise<IPaginationResponse<IUser>> {
+        const skip = limit * (page - 1);
+
+        const [users, itemCount] = await getManager().getRepository(User).findAndCount(
+            { where: searchObject, skip, take: limit },
+        );
+
+        return {
+            page,
+            perPage: limit,
+            itemCount,
+            data: users,
+        };
     }
 }
 

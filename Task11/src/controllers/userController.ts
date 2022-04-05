@@ -1,7 +1,8 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import { IUser } from '../entity';
 import { userService } from '../services';
+import { IRequestExtend } from '../interface';
 
 class UserController {
     public async getAllUsers(req: Request, res: Response): Promise<Response<IUser[]>> {
@@ -20,6 +21,19 @@ class UserController {
         const { id } = req.params;
         const deletedUser = await userService.deleteUser(id);
         return res.json(deletedUser);
+    }
+
+    public async getUserPagination(req: IRequestExtend, res: Response, next:NextFunction) {
+        try {
+            const { page, perPage, ...other } = req.query;
+
+            // @ts-ignore
+            const userPagination = await userService.getUserPagination(other, +page, +perPage);
+
+            res.json(userPagination);
+        } catch (e) {
+            next(e);
+        }
     }
 }
 
