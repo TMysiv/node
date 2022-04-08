@@ -1,0 +1,112 @@
+<!Doctype html>
+<html lang="en">
+<head>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+            integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+            crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div>
+    <h2>Choose chat </h2>
+    <button  id="room1">Join to room1</button>
+    <button  id="room2">Join to room2</button>
+    <button  id="room3">Join to room3</button>
+</div>
+
+<div class="wrap">
+    <div class="wrap_header">
+        <h1>Чатік</h1>
+        <h4>Вкажіть ваше ім'я та починайте переписку</h4>
+    </div>
+    <div class="wrap_main">
+        <div class="wrap_main_form">
+            <form class="form" id="form">
+                <h4>Ім'я</h4>
+                <textarea name="username" id="username" cols="30" rows="2"></textarea>
+                <br>
+                <h4>Повідомлення</h4>
+                <textarea name="text" id="text" cols="30" rows="6"></textarea>
+                <input type="submit" id="submit" value="SEND">
+            </form>
+        </div>
+        <div id="all_mess">
+            <h3>Повідомлення</h3>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+
+    const form = document.getElementById('form');
+    const username = document.getElementById('username');
+    const text = document.getElementById('text');
+    const btn = document.getElementById('btn');
+    const allMessages = document.getElementById('all_mess');
+
+    const room1 = document.getElementById('room1');
+    const room2 = document.getElementById('room2');
+    const room3 = document.getElementById('room3');
+
+    const socket = io('http://localhost:5200');
+
+    room1.onclick = () =>{
+        socket.emit('join_room', {id:1});
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            socket.emit('send message', {username:username.value, text:text.value, });
+            text.value = '';
+        }
+
+        socket.on('new message', (data) => {
+            const div = document.createElement('div');
+            div.innerHTML = `<b>${data.username}</b>: ${data.text}`;
+            allMessages.append(div)
+        })
+    }
+    room2.onclick = () =>{
+        socket.emit('join_room', {id:2});
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            socket.emit('send message', {username:username.value, text:text.value, });
+            text.value = '';
+        }
+
+        socket.on('new message', (data) => {
+            const div = document.createElement('div');
+            div.innerHTML = `<b>${data.username}</b>: ${data.text}`;
+            allMessages.append(div)
+        })
+    }
+    room3.onclick = () =>{
+        socket.emit('join_room', {id:3});
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            socket.emit('send message', {username:username.value, text:text.value, });
+            text.value = '';
+        }
+
+        socket.on('new message', (data) => {
+            const div = document.createElement('div');
+            div.innerHTML = `<b>${data.username}</b>: ${data.text}`;
+            allMessages.append(div)
+        })
+    }
+
+
+
+    socket.on('user_join_room', (data)=>{
+        console.log(data)
+    })
+
+</script>
+</body>
+</html>
