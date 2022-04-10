@@ -14,15 +14,17 @@ const server = http.createServer(app);
 // @ts-ignore
 const io = SocketIO(server, { cors: { origin: '*' } });
 
-io.on('connection', (socket:any) => {
-    socket.on('join_room', (data:any) => {
-        socket.join(data.id);
-        socket.broadcast.to(data.id).emit('user_join_room', { message: `User ${data.id} joined room` });
+io.on('connection', (socket: any) => {
+    socket.on('join_room', (data: any) => {
+        socket.join(data.nameRoom);
+        io.to(data.nameRoom).emit('user_join_room', { message: `User ${socket.id} joined room ${data.nameRoom}` });
+
+        socket.on('send message', (value: string) => {
+            io.to(data.nameRoom).emit('new message', value);
+        });
     });
 
-    socket.on('send message', (data:string) => {
-        io.emit('new message', data);
-    });
+
 });
 
 app.use(express.json());

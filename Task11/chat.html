@@ -13,14 +13,14 @@
 </head>
 <body>
 
+
 <div>
-    <h2>Choose chat </h2>
-    <button  id="room1">Join to room1</button>
-    <button  id="room2">Join to room2</button>
-    <button  id="room3">Join to room3</button>
+    <button id="javascript">Join to Javascript Forum</button>
+    <button id="java">Join to Java Forum</button>
+    <button id="python">Join to Python Forum</button>
 </div>
 
-<div class="wrap">
+<div id="wrap">
     <div class="wrap_header">
         <h1>Чатік</h1>
         <h4>Вкажіть ваше ім'я та починайте переписку</h4>
@@ -51,46 +51,27 @@
     const text = document.getElementById('text');
     const btn = document.getElementById('btn');
     const allMessages = document.getElementById('all_mess');
+    const wrap = document.getElementById('wrap');
 
-    const room1 = document.getElementById('room1');
-    const room2 = document.getElementById('room2');
-    const room3 = document.getElementById('room3');
+    const buttonJavascript = document.getElementById('javascript');
+    const buttonJava = document.getElementById('java')
+    const buttonPython = document.getElementById('python')
 
     const socket = io('http://localhost:5200');
 
-    room1.onclick = () =>{
-        socket.emit('join_room', {id:1});
-        form.onsubmit = (e) => {
-            e.preventDefault();
-            socket.emit('send message', {username:username.value, text:text.value, });
-            text.value = '';
-        }
+    const chats = () =>{
+        wrap.style.display = 'flex';
+        wrap.style.flexDirection = 'column';
 
-        socket.on('new message', (data) => {
-            const div = document.createElement('div');
-            div.innerHTML = `<b>${data.username}</b>: ${data.text}`;
-            allMessages.append(div)
+        socket.on('user_join_room', (data) => {
+            const user = document.createElement('div');
+            user.innerHTML = `<i>${data.message}</i>`
+            allMessages.append(user);
         })
-    }
-    room2.onclick = () =>{
-        socket.emit('join_room', {id:2});
-        form.onsubmit = (e) => {
-            e.preventDefault();
-            socket.emit('send message', {username:username.value, text:text.value, });
-            text.value = '';
-        }
 
-        socket.on('new message', (data) => {
-            const div = document.createElement('div');
-            div.innerHTML = `<b>${data.username}</b>: ${data.text}`;
-            allMessages.append(div)
-        })
-    }
-    room3.onclick = () =>{
-        socket.emit('join_room', {id:3});
         form.onsubmit = (e) => {
             e.preventDefault();
-            socket.emit('send message', {username:username.value, text:text.value, });
+            socket.emit('send message', {username: username.value, text: text.value,});
             text.value = '';
         }
 
@@ -101,12 +82,20 @@
         })
     }
 
+    buttonJavascript.onclick = () => {
+        socket.emit('join_room', {nameRoom: 'Javascript'});
+        chats();
+    }
 
+    buttonJava.onclick = () => {
+        socket.emit('join_room', {nameRoom: 'Java'});
+       chats();
+    }
 
-    socket.on('user_join_room', (data)=>{
-        console.log(data)
-    })
-
+    buttonPython.onclick = () => {
+        socket.emit('join_room', {nameRoom: 'Python'});
+       chats();
+    }
 </script>
 </body>
 </html>

@@ -3,9 +3,8 @@
     padding: 0;
 }
 
-.wrap{
-    display: flex;
-    flex-direction: column;
+#wrap{
+    display: none;
 }
 
 .wrap_header{
@@ -34,4 +33,16 @@
     margin-top: 10px;
     background: red;
     color: white;
+}
+
+#javascript{
+    background: yellow;
+}
+
+#java{
+    background: cornflowerblue;
+}
+
+#python{
+    background: greenyellow;
 }
