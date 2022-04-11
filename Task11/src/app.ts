@@ -7,6 +7,8 @@ import SocketIO from 'socket.io';
 import { apiRouter } from './routes/apiRouter';
 import { config } from './config/config';
 import { cronRun } from './cron';
+import { chatsRepository } from './repository/chats/chatsRepository';
+import { IChats } from './entity';
 
 const app = express();
 const server = http.createServer(app);
@@ -19,12 +21,12 @@ io.on('connection', (socket: any) => {
         socket.join(data.nameRoom);
         io.to(data.nameRoom).emit('user_join_room', { message: `User ${socket.id} joined room ${data.nameRoom}` });
 
-        socket.on('send message', (value: string) => {
-            io.to(data.nameRoom).emit('new message', value);
+        socket.on('send message', (message: any) => {
+            io.to(data.nameRoom).emit('new message', message);
+            const newMessage = { user: socket.id, text: message.text, chat: data.nameRoom } as IChats;
+            chatsRepository.sendMessage(newMessage);
         });
     });
-
-
 });
 
 app.use(express.json());
