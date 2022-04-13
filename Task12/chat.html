@@ -1,0 +1,101 @@
+<!Doctype html>
+<html lang="en">
+<head>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+            integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+            crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<div>
+    <button id="javascript">Join to Javascript Forum</button>
+    <button id="java">Join to Java Forum</button>
+    <button id="python">Join to Python Forum</button>
+</div>
+
+<div id="wrap">
+    <div class="wrap_header">
+        <h1>Чатік</h1>
+        <h4>Вкажіть ваше ім'я та починайте переписку</h4>
+    </div>
+    <div class="wrap_main">
+        <div class="wrap_main_form">
+            <form class="form" id="form">
+                <h4>Ім'я</h4>
+                <textarea name="username" id="username" cols="30" rows="2"></textarea>
+                <br>
+                <h4>Повідомлення</h4>
+                <textarea name="text" id="text" cols="30" rows="6"></textarea>
+                <input type="submit" id="submit" value="SEND">
+            </form>
+        </div>
+        <div id="all_mess">
+            <h3>Повідомлення</h3>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+
+    const form = document.getElementById('form');
+    const username = document.getElementById('username');
+    const text = document.getElementById('text');
+    const btn = document.getElementById('btn');
+    const allMessages = document.getElementById('all_mess');
+    const wrap = document.getElementById('wrap');
+
+    const buttonJavascript = document.getElementById('javascript');
+    const buttonJava = document.getElementById('java')
+    const buttonPython = document.getElementById('python')
+
+    const socket = io('http://localhost:5200');
+
+    const chats = () =>{
+        wrap.style.display = 'flex';
+        wrap.style.flexDirection = 'column';
+
+        socket.on('user_join_room', (data) => {
+            const user = document.createElement('div');
+            user.innerHTML = `<i>${data.message}</i>`
+            allMessages.append(user);
+        })
+
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            socket.emit('send message', {username: username.value, text: text.value,});
+            text.value = '';
+        }
+
+        socket.on('new message', (data) => {
+            const div = document.createElement('div');
+            div.innerHTML = `<b>${data.username}</b>: ${data.text}`;
+            allMessages.append(div)
+        })
+    }
+
+    buttonJavascript.onclick = () => {
+        socket.emit('join_room', {nameRoom: 'Javascript'});
+        chats();
+    }
+
+    buttonJava.onclick = () => {
+        socket.emit('join_room', {nameRoom: 'Java'});
+       chats();
+    }
+
+    buttonPython.onclick = () => {
+        socket.emit('join_room', {nameRoom: 'Python'});
+       chats();
+    }
+</script>
+</body>
+</html>

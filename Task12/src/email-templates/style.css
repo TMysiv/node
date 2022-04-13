@@ -1,0 +1,15 @@
+.header, .footer, .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h2{
+    color: red;
+    font-size: 20px;
+}
+
+.footer{
+    font-size: 16px;
+}
